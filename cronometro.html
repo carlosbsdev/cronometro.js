@@ -2,19 +2,30 @@
 <html>
 <head>
  <meta charset="UTF-8">
- <meta name="description" content="Free Web tutorials">
- <meta name="keywords" content="HTML,CSS,XML,JavaScript">
- <meta name="author" content="John Doe">
+ <meta name="description" content="Cronometro for you">
+ <meta name="keywords" content="cronometro">
+ <meta name="author" content="charlybs">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title></title>
+ <title id="title">00:00:00</title>
+ <style>
+  * {
+   text-align: center;
+   font-size: 50px;
+   font-weight: bold;
+   font-family: arial;
+ }
+ </style>
 </head>
+
 <body>
 <p>Cronómetro</p>
-<p id="cron"></p>
+<p id="cron">00:00:00</p>
 <button onclick="start()">Start</button>
 <button id="pause" onclick="pause()">Pause</button>
 <button onclick="reset()">Reset</button>
+
 <script>
+
 var hour = 0;
 var minute = 0;
 var second = 0;
@@ -24,8 +35,9 @@ function start() {
   if(cron !== undefined){
     return;
   }
-  cron = setInterval(function(){
+    cron = setInterval(function(){
     second += 1;
+
     if (second==60)
     {
       minute += 1;
@@ -35,17 +47,24 @@ function start() {
       hour += 1;
       minute = 0;
     }
-    document.getElementById("cron").innerHTML = hour + ":" + minute + ":" + second;
+
+    document.getElementById("title").innerHTML = printTime();
+    document.getElementById("cron").innerHTML = printTime();
+
   }, 1000)
 }
 function reset() {
   hour = 0;
   minute = 0;
   second = 0;
-  document.getElementById("cron").innerHTML = hour + ":" + minute + ":" + second;
+  document.getElementById("cron").innerHTML = printTime();
+  document.getElementById("title").innerHTML = printTime();
 }
 function pause() {
-  var text = document.getElementById("pause").firstChild;
+  if(cron == undefined && second==0 && minute==0){
+    return;
+  }
+  let text = document.getElementById("pause").firstChild;
   if(text.data=="Pause"){
     text.data = "Resume";
     clearInterval(cron);
@@ -57,6 +76,25 @@ function pause() {
 function resume() {
   cron = undefined;
   start();
+}
+function printTime() {
+  let hour_, minute_, second_;
+  if(hour<10){
+    hour_ = "0" + hour;
+  }else{
+    hour_ = hour;
+  }
+  if(minute<10){
+    minute_ = "0" + minute;
+  }else{
+    minute_ = minute;
+  }
+  if(second<10){
+    second_ = "0" + second;
+  }else{
+    second_ = second;
+  }
+  return hour_ + ":" + minute_ + ":" + second_;
 }
 </script>
 </body>
