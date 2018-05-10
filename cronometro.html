@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+ <meta name="description" content="Free Web tutorials">
+ <meta name="keywords" content="HTML,CSS,XML,JavaScript">
+ <meta name="author" content="John Doe">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title></title>
+</head>
+<body>
+<p>Cronómetro</p>
+<p id="cron"></p>
+<button onclick="start()">Start</button>
+<button id="pause" onclick="pause()">Pause</button>
+<button onclick="reset()">Reset</button>
+<script>
+var hour = 0;
+var minute = 0;
+var second = 0;
+var cron;
+
+function start() {
+  if(cron !== undefined){
+    return;
+  }
+  cron = setInterval(function(){
+    second += 1;
+    if (second==60)
+    {
+      minute += 1;
+      second = 0;
+    }
+    if(minute==59){
+      hour += 1;
+      minute = 0;
+    }
+    document.getElementById("cron").innerHTML = hour + ":" + minute + ":" + second;
+  }, 1000)
+}
+function reset() {
+  hour = 0;
+  minute = 0;
+  second = 0;
+  document.getElementById("cron").innerHTML = hour + ":" + minute + ":" + second;
+}
+function pause() {
+  var text = document.getElementById("pause").firstChild;
+  if(text.data=="Pause"){
+    text.data = "Resume";
+    clearInterval(cron);
+  }else{
+    text.data = "Pause";
+    resume();
+  }
+}
+function resume() {
+  cron = undefined;
+  start();
+}
+</script>
+</body>
+</html>
