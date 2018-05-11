@@ -27,11 +27,13 @@ var minute = 0;
 var second = 0;
 var cron;
 
+
 function start() {
   if(cron !== undefined){
     return;
   }
     cron = setInterval(function(){
+
     second += 1;
 
     if(second==60)
@@ -46,8 +48,9 @@ function start() {
 
     document.getElementById("title").innerHTML = printTime();
     document.getElementById("cron").innerHTML = printTime();
+    
+  }, 999)
 
-  }, 1000)
 }
 function reset() {
   hour = 0;
